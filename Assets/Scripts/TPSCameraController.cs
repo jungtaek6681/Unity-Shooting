@@ -34,7 +34,16 @@ public class TPSCameraController : MonoBehaviour
 
         transform.Rotate(Vector3.up * lookDelta.x * mouseSensitivity * Time.deltaTime);
 
-        lookTarget.position = Camera.main.transform.position + Camera.main.transform.forward * lookDistance;
+        Vector3 targetPos;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hitInfo, lookDistance))
+        {
+            targetPos = hitInfo.point;
+        }
+        else
+        {
+            targetPos = Camera.main.transform.position + Camera.main.transform.forward * lookDistance;
+        }
+        lookTarget.position = Vector3.Lerp(lookTarget.position, targetPos, 0.1f);
     }
 
     private void OnLook(InputValue value)

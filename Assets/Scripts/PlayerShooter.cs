@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerShooter : MonoBehaviour
 {
+    [SerializeField] WeaponHolder holder;
     [SerializeField] Animator animator;
     [SerializeField] Rig aimRig;
     [SerializeField] Rig weaponHolderRig;
@@ -15,6 +16,7 @@ public class PlayerShooter : MonoBehaviour
     private void Fire()
     {
         animator.SetTrigger("Fire");
+        holder.Fire();
     }
 
     private void Reload()
