@@ -5,6 +5,7 @@ public class Gun : MonoBehaviour
     [SerializeField] Transform muzzlePoint;
     [SerializeField] float maxDistance;
     [SerializeField] int damage;
+    [SerializeField] float power;
 
     public void Fire()
     {
@@ -16,6 +17,12 @@ public class Gun : MonoBehaviour
             if (damagable != null)
             {
                 damagable.TakeDamage(damage);
+            }
+
+            Rigidbody rigidbody = hitInfo.collider.GetComponent<Rigidbody>();
+            if (rigidbody != null)
+            {
+                rigidbody.AddForceAtPosition(muzzlePoint.forward * power, hitInfo.point, ForceMode.Impulse);
             }
         }
         else
