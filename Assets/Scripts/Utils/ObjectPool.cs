@@ -9,13 +9,12 @@ public class ObjectPool : MonoBehaviour
 
     private Stack<PooledObject> objectPool;
 
-    private void Start()
+    public void CreatePool(PooledObject prefab, int size, int capacity)
     {
-        CreatePool();
-    }
+        this.prefab = prefab;
+        this.size = size;
+        this.capacity = capacity;
 
-    public void CreatePool()
-    {
         objectPool = new Stack<PooledObject>(capacity);
         for (int i = 0; i < size; i++)
         {
