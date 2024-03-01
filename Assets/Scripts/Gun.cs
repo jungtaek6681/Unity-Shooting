@@ -4,10 +4,16 @@ public class Gun : MonoBehaviour
 {
     [SerializeField] Transform muzzlePoint;
     [SerializeField] ParticleSystem muzzleEffect;
-    [SerializeField] PooledObject hitEffect;
     [SerializeField] float maxDistance;
     [SerializeField] int damage;
     [SerializeField] float power;
+
+    private PooledObject hitEffectPrefab;
+
+    private void Awake()
+    {
+        hitEffectPrefab = Manager.Resource.Load<PooledObject>("Particle/hitEffect");
+    }
 
     public void Fire()
     {
@@ -28,7 +34,7 @@ public class Gun : MonoBehaviour
                 rigidbody.AddForceAtPosition(muzzlePoint.forward * power, hitInfo.point, ForceMode.Impulse);
             }
 
-            PooledObject effect = Manager.Pool.GetPool(hitEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+            PooledObject effect = Manager.Pool.GetPool(hitEffectPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             effect.transform.parent = hitInfo.transform;
         }
         else
